@@ -1,0 +1,105 @@
+.bg  {
+  height: 100vh;
+  width:100vw;
+  position: fixed;
+  z-index: -10;
+  background-image: url("/resources/background.jpg");
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  background-position: left top;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+}
+
+a{
+  text-decoration: none;
+}
+
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 30px;
+  width: 150px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #555;
+	transition: background-color 0.5s ease;
+}
+
+
+.header {
+  background: #efefef; 
+  clear: both;
+  height: 75px;
+  border-radius: 0px 0px 15px 15px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+  
+  #logo {
+    float:left;
+    margin:0;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+  }
+
+  .nav_link{
+    color: #4a4a4a;
+    font-size: 150%;
+    position: relative;
+    bottom: 15px;
+  }
+
+  .body{
+    position: relative;
+    top:80px;
+  }
+
+.nav_link:hover{
+  color: #c00909e5;
+	transition: all 0.8s ease;
+}
+  #active{
+    color: #1c07da;
+
+  }
+
+  #navlist {
+    float: right;
+    position: relative;
+  }
+
+
+  li {
+    display: inline;
+    padding-right: 20px;
+    text-align: center;
+      a:link{
+        line-height: 75px;
+        height: 75px;
+      }
+    }
+
+
+
+
+
+
+
+
