@@ -11,30 +11,14 @@ class UserController extends Controller
     
     public function Index(){
         if(auth()->check()){
-            $user = auth()->user();
-             $name=$user['name'];
-        $inventory = Inventory::all();
-        $employee= Employee::all();
-        return view('Index')->with(['inventory'=>$inventory,'employee'=>$employee]);
+
+            return view('Index');
+        
         }else{
-            
-            // Excel::import(new EmployeeImport, 'C:\Users\Mobin Khan\Desktop\Book1.xlsx');
             return view('loginPage');
         }
     }
 
-
-    public function employee(){
-        
-        
-        return ['data'=>$data];
-    }
-
- 
-    public function employeePage(){
-        return view('employeePage');
-    }
-   
 
     public function addEmployee(Request $req ){
 

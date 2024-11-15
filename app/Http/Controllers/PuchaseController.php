@@ -13,23 +13,20 @@ class PuchaseController extends Controller
         return  view('bill');
     }
 
-    public function addBill(){
-        return view('bill');
-    }
 
-    public function addInventory(Request $req ){
+    public function purchaseAdd(Request $req ){
         $req->validate([
             'name' => 'required',
-            'name' => 'required',
-            'items' => 'required',
+            'item_list' => 'required',
             'amount' => 'required',
         ]);
         
         $purchase = new Purchase;
             $sale->name = $req->name;
-            $sale->items = $req->items;
             $sale->amount=$req->amount;
-            $sale->save();       
+            $sale->save();      
+            
+            // add list logic
 
         $cash = new Cash;
             $cash->name =  $req->name;
@@ -38,26 +35,28 @@ class PuchaseController extends Controller
             $cash->save();
 
 
-
-        foreach($req->items->all() as $key => $value){
-            if($this->getInventory($value['name'])){
-
-                $inventory = $this->getInventory($value['name']);
-                $inventory->remain = $inventory->remain + $value['qty'];
-                $model->save();
+        foreach($req->item_list as $item ){
+            if($this->getInventory($item)){
+                $inventory = $this->getInventory($item);
+                $inventory->remain = $inventory->remain + $item->qty;
+                $inventory->save();
             }   
             else{
-                $inventory = new Inventory;
-                $inventory = $key;
-                $inventory->save();
-            }
+                Inventory::create($item);
+            } 
+
+            $item->purchase_id = $purchase->id;
+            PurchaseList::create($item);
+
         }
 
-
-
-        return redirect('/');    
+        return redirect('/purchase');    
 
     }
 
+
+    public function getInventory($req){
+        return Inventory::where('name','=',$req->name)->first();
+    }
 
 }

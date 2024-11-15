@@ -12,25 +12,13 @@ class SalesController extends Controller
 {
     public function salesPage(){ 
         return view('sales'); 
-        $data = Sales::all();
-        return  view('sals',['data'=>$data]);
-    }
-    public function salesData(){ 
-        return response()
-        ->json([]);
     }
 
-
-
-    
-
-
-
+   
     public function addSales(Request $req ){
         $req->validate([
             'name' => 'required',
-            'item_name' => 'required',
-            'qty' => 'required',
+            'item_list' => 'required',
             'amount' => 'required',
         ]);
         
@@ -38,8 +26,6 @@ class SalesController extends Controller
 
         $sale = new Sales;
             $sale->name = $nameId;
-            $sale->item_name = $this->getInventory($req)->value('id');
-            $sale->qty=$req->qty;
             $sale->amount=$req->amount;
             if($req->pay_by){
                 $sale->cr= 1 ;
@@ -48,10 +34,18 @@ class SalesController extends Controller
             $sale->save(); 
         
 
+        foreach($req->item_list as $item ){
 
-        $inventory = $this->getInventory($req);
-        $inventory->remain = $inventory->remain - $req->qty;
-        $inventory->save();
+            $inventory = $this->getInventory($item);
+            $inventory->remain = $inventory->remain - $item->qty;
+            $inventory->save();
+
+            
+            $item->purchase_id = $sale->id;
+            SalesList::create($item);
+
+        }    
+
         
 
         if($req->pay_by){

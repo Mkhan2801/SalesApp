@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('name')->coonstrained()->onDelete('cascade');
-            $table->foreignId('item_name')->coonstrained()->onDelete('cascade');
-            $table->integer('qty');
             $table->integer('amount');
             $table->boolean('cr')->default('0');
             $table->timestamps();

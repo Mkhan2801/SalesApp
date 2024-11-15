@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cash', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('name')->coonstrained()->onDelete('cascade');
+            $table->string('name');
             $table->integer('amount');
             $table->boolean('in_out')->default('1');
             $table->timestamps();
