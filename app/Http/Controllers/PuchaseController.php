@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cash;
 use App\Models\Purchase;
 use App\Models\Inventory;
+use App\Models\PurchaseList;
 use Illuminate\Http\Request;
 
 class PuchaseController extends Controller
@@ -15,38 +16,53 @@ class PuchaseController extends Controller
 
 
     public function purchaseAdd(Request $req ){
+
+        
+      
         $req->validate([
             'name' => 'required',
             'item_list' => 'required',
             'amount' => 'required',
         ]);
-        
         $purchase = new Purchase;
-            $sale->name = $req->name;
-            $sale->amount=$req->amount;
-            $sale->save();      
+            $purchase->name = $req->name;
+            $purchase->amount=$req->amount;
+            $purchase->save();      
             
-            // add list logic
-
         $cash = new Cash;
             $cash->name =  $req->name;
             $cash->amount=$req->amount;
-            $cash->cr= 0;
+            $cash->in_out= 0;
             $cash->save();
 
+            $addCash = Cash::where('name','=','cashInHand');
+            $addCash->decrement('amount',$req->amount);
+        $list = explode(",",$req->item_list);
 
-        foreach($req->item_list as $item ){
+        
+        $items = json_decode($req->item_list,true);
+        foreach($items as $item){
             if($this->getInventory($item)){
                 $inventory = $this->getInventory($item);
-                $inventory->remain = $inventory->remain + $item->qty;
+                $inventory->increment('remain',$item['qty']);
                 $inventory->save();
             }   
             else{
-                Inventory::create($item);
+                $inv['name'] =$item["name"];
+                $inv['price'] =$item['price'];
+                $inv['remain'] =$item['qty'];
+                Inventory::create($inv);
             } 
+            $inventory = $this->getInventory($item);
+            
+            $inv['name'] =$item["name"];
+            $inv['price'] =$item['price'];
+            $inv['qty'] =$item['qty'];
+            $id = Purchase::where('name','=',$req['name'])->latest()->first();
+            $inv['purchase_id'] = $id->id;
+            PurchaseList::create($inv);
 
-            $item->purchase_id = $purchase->id;
-            PurchaseList::create($item);
+
 
         }
 
@@ -56,7 +72,7 @@ class PuchaseController extends Controller
 
 
     public function getInventory($req){
-        return Inventory::where('name','=',$req->name)->first();
+        return Inventory::where('name','=',$req['name'])->first();
     }
 
 }

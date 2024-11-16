@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\TellyController;
@@ -9,22 +10,30 @@ use App\Http\Controllers\PuchaseController;
 
 Route::get('/', [UserController::class,'Index'])->name("login");
 
-Route::post('/addUser', [UserController::class,'addUser']);
 Route::post('/singIn', [UserController::class,'singIn']);
 Route::get('/singOut', [UserController::class,'singOut']);
 
 
-Route::get('/employee', [EmployeeController::class,'employee']);
+Route::post('/employeeAdd', [UserController::class,'addEmployee']);
 
-Route::get('/sales', [SalesController::class,'salesPage']);
-Route::get('/salesData', [SalesController::class,'salesData']);
 Route::post('/sales', [SalesController::class,'salesAdd']);
+Route::get('/sales', [SalesController::class,'salesPage']);
 
 Route::get('/purchase', [PuchaseController::class,'purchasePage']);
 Route::post('/purchase', [PuchaseController::class,'purchaseAdd']);
 
-
+Route::get('/inventory', [TellyController::class,'inventoryPage']);
+Route::post('/addMenu', [TellyController::class,'menuAdd']);
+Route::post('/addCash', [TellyController::class,'cashAdd']);
 
 
 Route::get('/tally', [TellyController::class,'tally']);
-Route::get('/inventory', [TellyController::class,'inventoryPage']);
+
+
+
+Route::get('/employeeData', [DataController::class,'employeeData']);
+Route::get('/salesData', [DataController::class,'salesData']);
+Route::get('/inventoryData', [DataController::class,'inventoryData']);
+Route::get('/cashData', [DataController::class,'dataCash']);
+Route::get('/purchaseData', [DataController::class,'purchaseData']);
+Route::get('/salesItem', [DataController::class,'salesItems']);

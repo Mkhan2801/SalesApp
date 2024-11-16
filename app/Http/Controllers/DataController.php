@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cash;
 use App\Models\Sales;
 use App\Models\Employee;
+use App\Models\LinkList;
+use App\Models\Purchase;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 
@@ -21,11 +24,19 @@ class DataController extends Controller
         $employee= Inventory::all();
         return ['data'=>$employee];
     }
-    public function cashData(){
+    public function dataCash(){
         $employee= Cash::all();
         return ['data'=>$employee];
     }
+    public function purchaseData(){
+        $data= Purchase::all();
+        return ['data'=>$data];
+    }
 
 
+    public function salesItems(){
+        $data = LinkList::all();
+        return ['data'=>$data];
+    }
 
 }

@@ -25,7 +25,7 @@
           <hr>
 	        
           <div class="row">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="bill_name">
           </div>
 
           <div class="row">
@@ -40,7 +40,7 @@
                     <th scope="col">Total</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id='billListDiv'>
                   <tr>
                     <th scope="row">1</th>
                     <td>Chocolate</td>
@@ -57,7 +57,7 @@
                 </div>
                 
                 <div class="col text-end">
-                  <span class="">000</span>
+                  <span class="" id="total">000</span>
                 </div>
               </div>
               
@@ -67,16 +67,16 @@
 
           <div class="row">
             <div class="d-grid gap-2 col-6 mx-auto">
-              <button type="button" class="btn btn-outline-primary btn-lg btn-block">
+              <button type="button" class="btn btn-outline-primary btn-lg btn-block" id="cash" value=1>
                 Cash
               </button>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
-              <button type="button" class="btn btn-outline-danger btn-lg btn-block">
+              <button type="button" class="btn btn-outline-danger btn-lg btn-block" id="cr" value=0>
                 Cr
               </button>
+      
             </div>
-            
           </div>
       
         </div> 
@@ -86,6 +86,28 @@
     
       {{$slot}}
 
+      
+<div class="d-flex position-absolute top-50 start-50 translate-middle z-2 invisible"  >
+<form method="POST" action="/sales" id="salesForm">
+          @csrf
+          <h1 class="h3 mb-3 fw-normal">Bill</h1>
+          <div class="row">
+            <div class="form-floating col-6">
+              <input type="text" class="form-control" name='name' placeholder="Name" id="bill_to_name">
+              <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating col-6">
+              <input type="number" class="form-control" name='amount' placeholder="Amount" id="bill_amount">
+              <label for="floatingInput">Amount</label>
+            </div>
+  
+            <input type="text" class="form-control invisible" name='item_list' id="item_list">
+            <input type="text" class="form-control invisible" name='pay_by' id="pay_by">
+
+          </div>
+        </form>
+
+</div>
     </div>
 
 </div>

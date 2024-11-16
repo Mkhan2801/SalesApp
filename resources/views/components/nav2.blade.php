@@ -1,6 +1,6 @@
 <x-nav>
 
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-5 d-flex justify-content-around z-3" style="top: 70px;">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-5 d-flex justify-content-around z-3" style="top: 70px;"  id='CashaddOn'>
     <div id='addOn' >
         
     </div>

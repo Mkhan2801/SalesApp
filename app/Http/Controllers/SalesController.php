@@ -15,7 +15,8 @@ class SalesController extends Controller
     }
 
    
-    public function addSales(Request $req ){
+    public function salesAdd(Request $req ){
+        
         $req->validate([
             'name' => 'required',
             'item_list' => 'required',
@@ -32,16 +33,21 @@ class SalesController extends Controller
             }
             
             $sale->save(); 
-        
 
-        foreach($req->item_list as $item ){
+           
+            
+            $items = json_decode($req['item_list'],true);
+            return($items);
+
+        foreach($items as $item ){
 
             $inventory = $this->getInventory($item);
-            $inventory->remain = $inventory->remain - $item->qty;
+            $inventory->decrement('remain',$item['qty']);
             $inventory->save();
 
             
-            $item->purchase_id = $sale->id;
+            $id = Sales::where('name','=',$req['name'])->latest()->first();
+            $item->sale_id = $sale->id;
             SalesList::create($item);
 
         }    
@@ -54,6 +60,9 @@ class SalesController extends Controller
             $cash->amount=$req->amount;
             $cash->cr= 1 ;
             $cash->save();
+
+            $addCash = Cash::where('name','=','cashInHand');
+            $addCash->increment('amount',$req->amount);
 
         }
 

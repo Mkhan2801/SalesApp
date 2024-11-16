@@ -10,6 +10,6 @@ class Purchase extends Model
     use HasFactory;
 
     protected  $fillable = [
-        'name','items','amount'
+        'name','amount'
     ];
 }

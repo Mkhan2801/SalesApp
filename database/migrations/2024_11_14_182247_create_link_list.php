@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('link_list', function (Blueprint $table) {
+        Schema::create('link_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('inventory_id')->coonstrained()->onDelete('cascade');
             $table->string('name');
