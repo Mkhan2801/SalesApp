@@ -2,6 +2,7 @@
 <hr>
 <x-sidebar>
 
+@vite(['resources/css/main.css'])
 <div class="mt-5 mb-5">
 
 <div class=" container z-2 position-relative mt-3 mb-5 row row-cols-2 row-cols-md-5 mb-3 text-center" style="width: 70vw;" id="itemDiv">
@@ -63,7 +64,18 @@
 </div>
 
 @vite(['resources\js\components\index.js'])
+<script>
 
+const div = document.getElementById("myDropdown");
+let searchInput = document.getElementById('bill_name');
+
+
+function select(ele){
+  searchInput.value = ele
+div.classList.remove("show");
+  
+}
+</script>
 
 </x-sidebar>
 

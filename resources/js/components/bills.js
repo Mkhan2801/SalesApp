@@ -58,15 +58,12 @@ let root = document.getElementById('data')
                       let date = new Date(data[x].created_at).toDateString()
                       root.innerHTML +=`
                       <td>${x}</td>
-                      <td>${data[x].name}</td>
+                      <td>
+                      <a href="/expendpur/${data[x].id}">${data[x].name}</a></td>
                       <td>${data[x].amount}</td>
                       <td>${date}</td>
                       
                   `
                     }
-                     
-                      
-                     
-              
                   });
 

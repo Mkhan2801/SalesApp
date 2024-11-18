@@ -6,6 +6,7 @@ use App\Models\Cash;
 use App\Models\Sales;
 use App\Models\Employee;
 use App\Models\Inventory;
+use App\Models\SalesList;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -22,11 +23,10 @@ class SalesController extends Controller
             'item_list' => 'required',
             'amount' => 'required',
         ]);
-        
         $nameId = $this->getNameId($req);
 
         $sale = new Sales;
-            $sale->name = $nameId;
+            $sale->name = $req['name'];
             $sale->amount=$req->amount;
             if($req->pay_by){
                 $sale->cr= 1 ;
@@ -34,21 +34,22 @@ class SalesController extends Controller
             
             $sale->save(); 
 
-           
-            
-            $items = json_decode($req['item_list'],true);
-            return($items);
+            $items = json_decode($req->item_list,true);
 
         foreach($items as $item ){
-
-            $inventory = $this->getInventory($item);
+            $inventory = Inventory::find($item['inventory_id'])->first();
             $inventory->decrement('remain',$item['qty']);
             $inventory->save();
 
             
+            
+            $inv['name'] =$item["name"];
+            $inv['price'] =$item['price'];
+            $inv['qty'] =$item['qty'];
             $id = Sales::where('name','=',$req['name'])->latest()->first();
-            $item->sale_id = $sale->id;
-            SalesList::create($item);
+           
+            $inv['sale_id'] = $id->id;
+            SalesList::create($inv);
 
         }    
 
@@ -56,9 +57,9 @@ class SalesController extends Controller
 
         if($req->pay_by){
             $cash = new Cash;
-            $cash->name = $nameId;
+            $cash->name = $req['name'];
             $cash->amount=$req->amount;
-            $cash->cr= 1 ;
+            $cash->in_out= 1 ;
             $cash->save();
 
             $addCash = Cash::where('name','=','cashInHand');
@@ -70,17 +71,24 @@ class SalesController extends Controller
     }
 
 
-    public function payment(Sales $sale){
-        $sale->cr = 1;
-        $sale->save();
+    public function payment(Sales $saleId){
+
+        $saleId->update(['cr' => 1]);
         
         $cash = new Cash;
-        $cash->name = $this->nameId($sale);
-        $cash->amount=$req->amount;
-        $cash->cr= 1 ;
+        $cash->name = $saleId->name;
+        $cash->amount=$saleId->amount;
+        $cash->in_out= 1 ;
         $cash->save();
 
         return redirect('/');
+
+    } 
+
+    public function expendSale(Sales $saleId){
+
+        $data=SalesList::where('sale_id', '=' ,$saleId->id)->get(); 
+        return view('expend',['data'=>$data]);
 
     } 
 

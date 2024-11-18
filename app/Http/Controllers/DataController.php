@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cash;
 use App\Models\Sales;
 use App\Models\Employee;
@@ -13,11 +14,12 @@ use Illuminate\Http\Request;
 class DataController extends Controller
 {
     public function employeeData(){
-        $employee= Employee::all();
+
+        $employee= Employee::all()->sortDesc();
         return ['data'=>$employee];
     }
-    public function salesData(){
-        $employee= Sales::all();
+    public function dataSale(){
+        $employee= Sales::whereDate('created_at',Carbon::today())->get();
         return ['data'=>$employee];
     }
     public function inventoryData(){
@@ -25,11 +27,11 @@ class DataController extends Controller
         return ['data'=>$employee];
     }
     public function dataCash(){
-        $employee= Cash::all();
+        $employee= Cash::all()->sortDesc();
         return ['data'=>$employee];
     }
     public function purchaseData(){
-        $data= Purchase::all();
+        $data= Purchase::all()->sortDesc();
         return ['data'=>$data];
     }
 

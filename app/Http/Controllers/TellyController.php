@@ -22,11 +22,11 @@ class TellyController extends Controller
             'name' => 'required',
             'price' => 'required',
         ]);
-        $id = Inventory::where('name','=',$req->name)->first();
+        $id = Inventory::where('name','=',$req->link_to)->first();
         $input['inventory_id'] = $id->id;
         LinkList::create($input);
 
-        return redirect('/sales');
+        return redirect('/');
     }
 
     public function cashAdd(Request $req){

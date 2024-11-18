@@ -64,6 +64,7 @@ let addFun = function(){
   } else{
     billList[billItem].qty += 1
   }
+  console.log(billList)
   printbill(billList)
 }
 
@@ -114,8 +115,44 @@ function submit(){
 billToName.value= document.getElementById("bill_name").value
 billToAmount.value= document.getElementById("total").innerText
 payBy.value=this.value
-itemBillList.value =billList 
+itemBillList.value =  JSON.stringify(billList);
 
 document.getElementById("salesForm").submit();
   
 }
+
+
+
+
+
+const nameData = await axios('/dataEmployee');
+
+let names = nameData.data.data;
+let searchInput = document.getElementById('bill_name')
+
+
+// searchInput.onkeyup(searcharr)
+searchInput.onkeyup = function (){searcharr()}
+
+function searcharr(){
+
+let query = searchInput.value;
+
+
+const div = document.getElementById("myDropdown");
+
+let output=[]
+let text = ''
+for(let ele in names){
+  if(names[ele].name.toLowerCase().includes(query.toLowerCase()) )
+  output.push(names[ele])
+}
+for (let name in output){
+  text += `<li onclick='select("${output[name].name}")'> ${output[name].name} </li>`
+}
+div.innerHTML = text
+div.classList.add("show");
+}
+
+
+

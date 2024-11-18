@@ -26,6 +26,11 @@
 	        
           <div class="row">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="bill_name">
+            <div class="drpodown">
+            <div id="myDropdown" class="dropdown-content">
+
+            </div>
+</div>
           </div>
 
           <div class="row">
@@ -41,13 +46,7 @@
                   </tr>
                 </thead>
                 <tbody id='billListDiv'>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Chocolate</td>
-                    <td>1</td>
-                    <td>10</td>
-                    <td>10</td>
-                  </tr>
+                  
                 </tbody>
               </table>
               <hr>
@@ -111,3 +110,4 @@
     </div>
 
 </div>
+

@@ -18,8 +18,12 @@ Route::post('/employeeAdd', [UserController::class,'addEmployee']);
 
 Route::post('/sales', [SalesController::class,'salesAdd']);
 Route::get('/sales', [SalesController::class,'salesPage']);
+Route::get('/crPay/{saleId}', [SalesController::class,'payment']);
+Route::get('/expendsale/{saleId}', [SalesController::class,'expendSale']);
+
 
 Route::get('/purchase', [PuchaseController::class,'purchasePage']);
+Route::get('/expendpur/{purchaseId}', [PuchaseController::class,'expendPur']);
 Route::post('/purchase', [PuchaseController::class,'purchaseAdd']);
 
 Route::get('/inventory', [TellyController::class,'inventoryPage']);
@@ -31,8 +35,8 @@ Route::get('/tally', [TellyController::class,'tally']);
 
 
 
-Route::get('/employeeData', [DataController::class,'employeeData']);
-Route::get('/salesData', [DataController::class,'salesData']);
+Route::get('/dataEmployee', [DataController::class,'employeeData']);
+Route::get('/salesData', [DataController::class,'dataSale']);
 Route::get('/inventoryData', [DataController::class,'inventoryData']);
 Route::get('/cashData', [DataController::class,'dataCash']);
 Route::get('/purchaseData', [DataController::class,'purchaseData']);

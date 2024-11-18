@@ -2,7 +2,7 @@
 	
 @vite(['resources\js\components\sales.js'])
 <div class="container mb-5">
-<table class="table table-striped table-class hidden-sm hidden-xs mb-5 mt-5" id= "table-id" >
+<table class="table table-striped table-class hidden-sm hidden-xs mb-5 mt-5" id= "table_div" >
 
 
 
@@ -15,8 +15,6 @@
 		<th>Date</th>
 		<th>Pay</th>
 	</tr>
-		<tr id="data">
-		</tr>
 	
 	
 	

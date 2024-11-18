@@ -71,6 +71,13 @@ class PuchaseController extends Controller
     }
 
 
+    public function expendPur(Purchase $purchaseId){
+
+        $data=purchaseList::where('purchase_id', '=' ,$purchaseId->id)->get(); 
+        return view('expend',['data'=>$data]);
+
+    } 
+
     public function getInventory($req){
         return Inventory::where('name','=',$req['name'])->first();
     }
