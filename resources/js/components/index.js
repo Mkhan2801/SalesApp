@@ -29,7 +29,8 @@ LinkOverlayBtn.addEventListener("click" , function(){
  listPrint(data)
 
 function listPrint(data){
-
+  
+itemDiv.innerHTML = ''
   for(let x in data){
         
     itemDiv.innerHTML += `
@@ -129,30 +130,63 @@ const nameData = await axios('/dataEmployee');
 
 let names = nameData.data.data;
 let searchInput = document.getElementById('bill_name')
-
-
-// searchInput.onkeyup(searcharr)
-searchInput.onkeyup = function (){searcharr()}
-
-function searcharr(){
-
-let query = searchInput.value;
-
-
 const div = document.getElementById("myDropdown");
 
-let output=[]
-let text = ''
-for(let ele in names){
-  if(names[ele].name.toLowerCase().includes(query.toLowerCase()) )
-  output.push(names[ele])
+
+const div2 = document.getElementById("myDropdown_2");
+let searchnameInput = document.getElementById('Search_name');
+
+// searchInput.onkeyup(searcharr)
+searchInput.onkeyup = function (){searcharr(div,names)}
+searchnameInput.onkeyup = function (){searchnamearr(div2,data)}
+
+function searcharr(outdiv,namelist){
+
+  let query = searchInput.value;
+  
+  
+  
+  let output=[]
+  let text = ''
+  for(let ele in namelist){
+    if(namelist[ele].name.toLowerCase().includes(query.toLowerCase()) )
+    output.push(namelist[ele])
+  }
+  for (let name in output){
+    text += `<li onclick='select("${output[name].name}")'> ${output[name].name} </li>`
+  }
+  outdiv.innerHTML = text
+  outdiv.classList.add("show");
+  }
+
+
+
+  function searchnamearr(outdiv,namelist){
+  
+  let query = searchnameInput.value;
+  
+  console.log(namelist)
+  
+  let output=[]
+  let text = ''
+  for(let ele in namelist){
+    if(namelist[ele].name.toLowerCase().includes(query.toLowerCase()) )
+    output.push(namelist[ele])
+  }
+  listPrint(output)
+  console.log(output)
+  for (let name in output){
+    text += `<li onclick='selectname("${output[name].name}")'> ${output[name].name} </li>`
+  }
+  outdiv.innerHTML = text
+  outdiv.classList.add("show");
+  
+let itemList = document.getElementsByClassName('addToList')
+for(let i=0; i < itemList.length;i++){
+  itemList[i].addEventListener("click", addFun)
 }
-for (let name in output){
-  text += `<li onclick='select("${output[name].name}")'> ${output[name].name} </li>`
-}
-div.innerHTML = text
-div.classList.add("show");
-}
+
+  }
 
 
 

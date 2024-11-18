@@ -5,19 +5,6 @@
 <table class="table table-striped table-class hidden-sm hidden-xs mb-5 mt-5" id= "table_div" >
 
 
-
-
-    <hr>
-	<tr>
-		<th>#</th>
-		<th>Name</th>
-		<th>Amount</th>
-		<th>Date</th>
-		<th>Pay</th>
-	</tr>
-	
-	
-	
 </table>
 </div>
 <hr class='mb-5 pb-5'>
